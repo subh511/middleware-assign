@@ -2,23 +2,29 @@ const express = require("express");
 const app = express();
 
 
-function isOldEnough(age){
+function isOldEnoughMiddleware(req,res,next){
+    let age = req.query.age;
     if(age >= 14){
-        return true
+        next();
     }else{
-        return false;
-    }
-}
-app.get("/ride1",function(req,res){
-    //let entryAge = req.query.age;
-    if(isOldEnough(req.query.age)){
         res.json({
-            msg:"you have successfully ridden ride1"
-        })
-    }else{
-        res.status(411).json({
             msg:"sorry you are below the age"
         })
     }
+}
+ 
+app.get("/ride1",isOldEnoughMiddleware,function(req,res){
+    //let entryAge = req.query.age;
+        res.json({
+            msg:"you have successfully ridden ride1"
+        })
 })
+
+app.get("/ride2",isOldEnoughMiddleware,function(req,res){
+    //let entryAge = req.query.age;
+        res.json({
+            msg:"you have successfully ridden ride2"
+        })
+})
+
 app.listen(3000)
