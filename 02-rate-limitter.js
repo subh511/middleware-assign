@@ -20,7 +20,7 @@ setInterval(() => {
 function globalMiddleware(req, res, next) {
   const userId = req.headers["user-id"];
   if (numberOfRequestsForUser[userId]) {
-    numberOfRequestsForUser = numberOfRequestsForUser + 1;
+    numberOfRequestsForUser[userId] = numberOfRequestsForUser[userId] + 1;
     if (numberOfRequestsForUser[userId] > 5) {
       res.status(404).send("no entry");
     } else {
