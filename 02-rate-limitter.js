@@ -32,6 +32,8 @@ function globalMiddleware(req, res, next) {
   }
 }
 
+app.use(globalMiddleware)
+
 app.get("/user", function (req, res) {
   res.status(200).json({ name: "john" });
 });
@@ -40,4 +42,4 @@ app.post("/user", function (req, res) {
   res.status(200).json({ msg: "created dummy user" });
 });
 
-module.exports = app;
+app.listen(3000)
